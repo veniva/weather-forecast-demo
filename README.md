@@ -11,3 +11,15 @@ Build a React web app that displays the current 5-day weather forecast.
 7 Clear, readable interface; no need for polished or flashy UI.
 8 You may use any libraries, frameworks, build tools, or component systems you find appropriate.
 9 Include unit tests for the most important parts of the application.
+
+## Setup
+1 Create a `.env` file in the project root with `VITE_OPENWEATHER_API_KEY=YOUR_KEY`.
+2 Install dependencies with `npm install`.
+3 Start the app with `npm run dev`.
+
+## Usage
+- Search by city name or use "Use my location" to load the 5-day forecast.
+- Select a day card to drill into 3-hour intervals for that day.
+
+## Tests
+- Run `npm test`.
