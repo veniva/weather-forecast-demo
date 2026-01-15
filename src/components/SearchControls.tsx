@@ -1,8 +1,10 @@
-import { type FormEvent, useState } from 'react'
+import { type FormEvent } from 'react'
 
 type SearchControlsProps = {
   hasApiKey: boolean
   loading: boolean
+  query: string
+  onQueryChange: (nextQuery: string) => void
   onSearch: (city: string) => void
   onUseLocation: () => void
 }
@@ -10,11 +12,11 @@ type SearchControlsProps = {
 export const SearchControls = ({
   hasApiKey,
   loading,
+  query,
+  onQueryChange,
   onSearch,
   onUseLocation,
 }: SearchControlsProps) => {
-  const [query, setQuery] = useState('')
-
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     onSearch(query)
@@ -32,7 +34,7 @@ export const SearchControls = ({
           type="text"
           placeholder="Search by city (e.g., Paris)"
           value={query}
-          onChange={(event) => setQuery(event.target.value)}
+          onChange={(event) => onQueryChange(event.target.value)}
           disabled={loading}
         />
         <button type="submit" disabled={!hasApiKey || loading}>

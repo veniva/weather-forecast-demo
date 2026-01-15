@@ -10,6 +10,8 @@ type UseForecastResult = {
   loading: boolean
   error: string | null
   hasApiKey: boolean
+  lastSearchSource: 'city' | 'location' | null
+  resolvedCityName: string | null
   units: Units
   toggleUnits: () => void
   searchByCity: (city: string) => void
@@ -25,6 +27,8 @@ export const useForecast = (): UseForecastResult => {
   const [error, setError] = useState<string | null>(null)
   const [units, setUnits] = useState<Units>(DEFAULT_UNITS)
   const [lastParams, setLastParams] = useState<Record<string, string> | null>(null)
+  const [lastSearchSource, setLastSearchSource] = useState<'city' | 'location' | null>(null)
+  const [resolvedCityName, setResolvedCityName] = useState<string | null>(null)
 
   const apiKey = (import.meta.env.VITE_OPENWEATHER_API_KEY as string | undefined) ?? ''
   const hasApiKey = Boolean(apiKey)
@@ -39,7 +43,11 @@ export const useForecast = (): UseForecastResult => {
     return false
   }
 
-  const fetchForecast = async (params: Record<string, string>, nextUnits: Units = units) => {
+  const fetchForecast = async (
+    params: Record<string, string>,
+    nextUnits: Units = units,
+    source: 'city' | 'location' | null = lastSearchSource
+  ) => {
     if (!ensureApiKey()) {
       return
     }
@@ -47,6 +55,10 @@ export const useForecast = (): UseForecastResult => {
     setLoading(true)
     setError(null)
     setLastParams(params)
+    setLastSearchSource(source)
+    if (source === 'location') {
+      setResolvedCityName(null)
+    }
 
     try {
       const url = new URL(API_URL)
@@ -69,6 +81,9 @@ export const useForecast = (): UseForecastResult => {
       setForecast(data)
       setDaily(summaries)
       setSelectedDayKey(summaries[0]?.dayKey ?? null)
+      if (source === 'location') {
+        setResolvedCityName(data.city.name)
+      }
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Unable to load forecast.'
       setForecast(null)
@@ -86,7 +101,7 @@ export const useForecast = (): UseForecastResult => {
       setError('Enter a city name to search.')
       return
     }
-    void fetchForecast({ q: trimmed })
+    void fetchForecast({ q: trimmed }, units, 'city')
   }
 
   const useCurrentLocation = () => {
@@ -106,7 +121,7 @@ export const useForecast = (): UseForecastResult => {
         void fetchForecast({
           lat: position.coords.latitude.toString(),
           lon: position.coords.longitude.toString(),
-        })
+        }, units, 'location')
       },
       () => {
         setLoading(false)
@@ -120,7 +135,7 @@ export const useForecast = (): UseForecastResult => {
     const nextUnits = units === 'metric' ? 'imperial' : 'metric'
     setUnits(nextUnits)
     if (lastParams) {
-      void fetchForecast(lastParams, nextUnits)
+      void fetchForecast(lastParams, nextUnits, lastSearchSource)
     }
   }
 
@@ -136,6 +151,8 @@ export const useForecast = (): UseForecastResult => {
     loading,
     error,
     hasApiKey,
+    lastSearchSource,
+    resolvedCityName,
     units,
     toggleUnits,
     searchByCity,

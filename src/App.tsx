@@ -5,6 +5,7 @@ import { ForecastPanel } from './components/ForecastPanel'
 import { Notice } from './components/Notice'
 import { SearchControls } from './components/SearchControls'
 import { useForecast } from './hooks/useForecast'
+import { useEffect, useState } from 'react'
 
 function App() {
   const {
@@ -15,6 +16,8 @@ function App() {
     loading,
     error,
     hasApiKey,
+    lastSearchSource,
+    resolvedCityName,
     units,
     toggleUnits,
     searchByCity,
@@ -23,6 +26,19 @@ function App() {
   } = useForecast()
 
   const hasForecast = Boolean(forecast && daily.length > 0)
+  const [query, setQuery] = useState('')
+
+  useEffect(() => {
+    if (hasApiKey) {
+      useCurrentLocation()
+    }
+  }, [hasApiKey])
+
+  useEffect(() => {
+    if (lastSearchSource === 'location' && resolvedCityName) {
+      setQuery(resolvedCityName)
+    }
+  }, [lastSearchSource, resolvedCityName])
 
   return (
     <div className="app">
@@ -36,6 +52,8 @@ function App() {
       <SearchControls
         hasApiKey={hasApiKey}
         loading={loading}
+        query={query}
+        onQueryChange={setQuery}
         onSearch={searchByCity}
         onUseLocation={useCurrentLocation}
       />

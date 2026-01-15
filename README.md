@@ -18,6 +18,7 @@ Build a React web app that displays the current 5-day weather forecast.
 3 Start the app with `npm run dev`.
 
 ## Usage
+- On load, the app requests your current location and fills the search box with the detected city name.
 - Search by city name or use "Use my location" to load the 5-day forecast.
 - Select a day card to drill into 3-hour intervals for that day.
 
