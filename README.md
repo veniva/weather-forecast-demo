@@ -21,6 +21,7 @@ Build a React web app that displays the current 5-day weather forecast.
 - On load, the app requests your current location and fills the search box with the detected city name.
 - Search by city name or use "Use my location" to load the 5-day forecast.
 - Select a day card to drill into 3-hour intervals for that day.
+- On smaller screens, the hourly details open in a modal overlay; closing it keeps the day selected so details reappear on larger screens.
 
 ## Tests
 - Run `npm test`.

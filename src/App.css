@@ -233,9 +233,40 @@ button.secondary {
   box-shadow: var(--shadow);
 }
 
+.hourly-overlay {
+  position: static;
+}
+
+.hourly-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.hourly-header-main {
+  display: flex;
+  flex-direction: column;
+}
+
 .hourly-header h3 {
   margin: 0;
   font-size: 1.4rem;
+}
+
+.hourly-close {
+  display: none;
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  background: var(--surface-muted);
+  color: var(--text);
+  border: 1px solid var(--border);
+  box-shadow: none;
+}
+
+.hourly-close:hover {
+  transform: none;
+  box-shadow: none;
 }
 
 .hourly-header p {
@@ -302,9 +333,30 @@ button.secondary {
   border: 0;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px), (max-height: 520px) {
   .summary-meta {
     align-items: flex-start;
+  }
+
+  .hourly-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(11, 18, 20, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    z-index: 10;
+  }
+
+  .hourly {
+    width: min(100%, 520px);
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+
+  .hourly-close {
+    display: inline-flex;
   }
 
   .hour-row {

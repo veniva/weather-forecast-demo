@@ -7,13 +7,19 @@ type HourlyForecastProps = {
   day: DailyForecast
   timezone: number
   units: Units
+  onClose: () => void
 }
 
-export const HourlyForecast = ({ day, timezone, units }: HourlyForecastProps) => (
-  <section className="hourly">
+export const HourlyForecast = ({ day, timezone, units, onClose }: HourlyForecastProps) => (
+  <section className="hourly" role="dialog" aria-modal="true" aria-label={`Hourly forecast for ${day.label}`}>
     <div className="hourly-header">
-      <h3>Hourly details for {day.label}</h3>
-      <p>Each row represents a 3-hour interval.</p>
+      <div className="hourly-header-main">
+        <h3>Hourly details for {day.label}</h3>
+        <p>Each row represents a 3-hour interval.</p>
+      </div>
+      <button className="hourly-close" type="button" onClick={onClose} aria-label="Close hourly forecast">
+        Close
+      </button>
     </div>
     <div className="hourly-list">
       {day.entries.map((entry) => (
