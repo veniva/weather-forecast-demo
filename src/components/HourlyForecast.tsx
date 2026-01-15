@@ -1,3 +1,4 @@
+import { IMG_URL } from '../constants'
 import type { DailyForecast, Units } from '../forecast'
 import { formatHourLabel, formatTemperature } from '../forecast'
 import { formatDescription, formatWindSpeed } from '../formatters'
@@ -20,7 +21,7 @@ export const HourlyForecast = ({ day, timezone, units }: HourlyForecastProps) =>
           <div className="hour-main">
             <span className="hour-time">{formatHourLabel(entry.dt, timezone)}</span>
             <img
-              src={`https://openweathermap.org/img/wn/${entry.weather[0]?.icon ?? '01d'}.png`}
+              src={`${IMG_URL}/${entry.weather[0]?.icon ?? '01d'}.png`}
               alt={formatDescription(entry.weather[0]?.description ?? '')}
               loading="lazy"
             />
