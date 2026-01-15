@@ -1,0 +1,59 @@
+.dailyGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 1rem;
+}
+
+.dayCard {
+  text-align: left;
+  border-radius: 1rem;
+  border: 1px solid transparent;
+  padding: 1rem;
+  background: var(--surface);
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+.dayCard:hover {
+  transform: translateY(-2px);
+  border-color: rgba(31, 122, 140, 0.35);
+}
+
+.active {
+  border-color: var(--accent);
+  box-shadow: 0 18px 35px rgba(31, 122, 140, 0.2);
+}
+
+.dayCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dayIcon {
+  width: 48px;
+  height: 48px;
+}
+
+.dayLabel {
+  font-weight: 600;
+}
+
+.dayCardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.dayTemp {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.dayDesc {
+  color: var(--muted);
+}

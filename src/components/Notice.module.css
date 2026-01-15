@@ -1,0 +1,13 @@
+.notice {
+  border-left: 4px solid var(--accent);
+  background: var(--surface);
+  padding: 0.85rem 1rem;
+  border-radius: 0.75rem;
+  color: var(--text);
+}
+
+.error {
+  border-left-color: var(--error);
+  background: #f7e5e1;
+  color: #5c1e17;
+}

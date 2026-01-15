@@ -1,4 +1,4 @@
-import './App.css'
+import styles from './App.module.css'
 import { AppHeader } from './components/AppHeader'
 import { EmptyState } from './components/EmptyState'
 import { ForecastPanel } from './components/ForecastPanel'
@@ -41,7 +41,7 @@ function App() {
   }, [lastSearchSource, resolvedCityName])
 
   return (
-    <div className="app">
+    <div className={styles.app}>
       <AppHeader units={units} onToggleUnits={toggleUnits} />
       {!hasApiKey && (
         <Notice>
@@ -57,7 +57,7 @@ function App() {
         onSearch={searchByCity}
         onUseLocation={useCurrentLocation}
       />
-      {loading && <div className="loading">Loading forecast...</div>}
+      {loading && <div className={styles.loading}>Loading forecast...</div>}
       {!hasForecast && !loading && <EmptyState />}
       {forecast && hasForecast && (
         <ForecastPanel

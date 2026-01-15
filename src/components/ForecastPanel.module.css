@@ -1,0 +1,22 @@
+.forecast {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.hourlyOverlay {
+  position: static;
+}
+
+@media (max-width: 640px), (max-height: 520px) {
+  .hourlyOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(11, 18, 20, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    z-index: 10;
+  }
+}

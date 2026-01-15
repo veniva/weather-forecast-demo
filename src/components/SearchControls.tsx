@@ -1,4 +1,6 @@
 import { type FormEvent } from 'react'
+import buttonStyles from './Button.module.css'
+import styles from './SearchControls.module.css'
 
 type SearchControlsProps = {
   hasApiKey: boolean
@@ -23,12 +25,13 @@ export const SearchControls = ({
   }
 
   return (
-    <section className="controls">
-      <form className="search-form" onSubmit={handleSubmit}>
-        <label className="sr-only" htmlFor="city-search">
+    <section className={styles.controls}>
+      <form className={styles.searchForm} onSubmit={handleSubmit}>
+        <label className={styles.srOnly} htmlFor="city-search">
           City search
         </label>
         <input
+          className={styles.searchInput}
           id="city-search"
           name="city"
           type="text"
@@ -37,11 +40,16 @@ export const SearchControls = ({
           onChange={(event) => onQueryChange(event.target.value)}
           disabled={loading}
         />
-        <button type="submit" disabled={!hasApiKey || loading}>
+        <button className={buttonStyles.button} type="submit" disabled={!hasApiKey || loading}>
           Search
         </button>
       </form>
-      <button type="button" className="secondary" onClick={onUseLocation} disabled={!hasApiKey || loading}>
+      <button
+        type="button"
+        className={`${buttonStyles.button} ${buttonStyles.secondary}`}
+        onClick={onUseLocation}
+        disabled={!hasApiKey || loading}
+      >
         Use my location
       </button>
     </section>

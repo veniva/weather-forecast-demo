@@ -1,0 +1,38 @@
+.controls {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.searchForm {
+  display: flex;
+  gap: 0.75rem;
+  flex: 1 1 320px;
+}
+
+.searchInput {
+  flex: 1;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.searchInput:focus {
+  outline: 2px solid rgba(31, 122, 140, 0.25);
+  border-color: var(--accent);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}

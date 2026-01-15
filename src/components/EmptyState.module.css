@@ -1,0 +1,6 @@
+.empty {
+  padding: 2rem;
+  border-radius: 1rem;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}

@@ -1,4 +1,5 @@
 import type { Units } from '../forecast'
+import styles from './UnitsBadge.module.css'
 
 type UnitsBadgeProps = {
   units: Units
@@ -10,7 +11,7 @@ export const UnitsBadge = ({ units, onToggle }: UnitsBadgeProps) => {
 
   return (
     <div
-      className="units-badge"
+      className={styles.badge}
       role="button"
       tabIndex={0}
       aria-pressed={units === 'imperial'}

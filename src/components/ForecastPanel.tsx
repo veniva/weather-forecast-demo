@@ -4,6 +4,7 @@ import { DailyForecastGrid } from './DailyForecastGrid'
 import { ForecastSummary } from './ForecastSummary'
 import { HourlyForecast } from './HourlyForecast'
 import { useCompactLayout } from '../hooks/useCompactLayout'
+import styles from './ForecastPanel.module.css'
 
 type ForecastPanelProps = {
   forecast: ForecastResponse
@@ -41,7 +42,7 @@ export const ForecastPanel = ({
   const shouldShowHourly = Boolean(selectedDay) && (!isCompact || isOverlayOpen)
 
   return (
-    <div className="forecast">
+    <div className={styles.forecast}>
       <ForecastSummary forecast={forecast} />
       <DailyForecastGrid
         days={daily}
@@ -50,7 +51,7 @@ export const ForecastPanel = ({
         onSelectDay={handleSelectDay}
       />
       {shouldShowHourly && selectedDay && (
-        <div className="hourly-overlay">
+        <div className={styles.hourlyOverlay}>
           <HourlyForecast
             day={selectedDay}
             timezone={forecast.city.timezone}
