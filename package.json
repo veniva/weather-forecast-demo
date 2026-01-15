@@ -1,7 +1,7 @@
 {
-  "name": "solution2",
+  "name": "Weather Forecast App (test task)",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
