@@ -19,7 +19,7 @@ export const ForecastSummary = ({ forecast }: ForecastSummaryProps) => (
     </div>
     <div className="summary-meta">
       <span>5-day outlook</span>
-      <span>{forecast.list.length} x 3-hour intervals</span>
+      <span>3-hour intervals</span>
     </div>
   </section>
 )

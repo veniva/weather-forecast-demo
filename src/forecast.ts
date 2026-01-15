@@ -39,16 +39,20 @@ export type DailyForecast = {
   entries: ForecastEntry[]
 }
 
+/** Convert unix seconds to a Date adjusted by the timezone offset. */
 const toZonedDate = (unixSeconds: number, offsetSeconds: number) =>
   new Date((unixSeconds + offsetSeconds) * 1000)
 
+/** Left-pad a number to two digits for date formatting. */
 const pad2 = (value: number) => (value < 10 ? `0${value}` : `${value}`)
 
+/** Build a stable day key (YYYY-MM-DD) in the target timezone. */
 export const getDayKey = (unixSeconds: number, offsetSeconds: number) => {
   const date = toZonedDate(unixSeconds, offsetSeconds)
   return `${date.getUTCFullYear()}-${pad2(date.getUTCMonth() + 1)}-${pad2(date.getUTCDate())}`
 }
 
+/** Format a short weekday/month label for the given timestamp. */
 export const formatDayLabel = (unixSeconds: number, offsetSeconds: number) => {
   const date = toZonedDate(unixSeconds, offsetSeconds)
   return new Intl.DateTimeFormat('en-US', {
@@ -59,6 +63,7 @@ export const formatDayLabel = (unixSeconds: number, offsetSeconds: number) => {
   }).format(date)
 }
 
+/** Format a localized hour label for the given timestamp. */
 export const formatHourLabel = (unixSeconds: number, offsetSeconds: number) => {
   const date = toZonedDate(unixSeconds, offsetSeconds)
   return new Intl.DateTimeFormat('en-US', {
@@ -69,6 +74,7 @@ export const formatHourLabel = (unixSeconds: number, offsetSeconds: number) => {
   }).format(date)
 }
 
+/** Pick the entry closest to local noon for the day summary. */
 const pickRepresentativeEntry = (entries: ForecastEntry[], offsetSeconds: number) => {
   let chosen = entries[0]
   let smallestDiff = Number.POSITIVE_INFINITY
@@ -85,6 +91,7 @@ const pickRepresentativeEntry = (entries: ForecastEntry[], offsetSeconds: number
   return chosen
 }
 
+/** Group entries by day and return a summarized daily forecast list. */
 export const buildDailySummaries = (entries: ForecastEntry[], offsetSeconds: number) => {
   const grouped = new Map<string, ForecastEntry[]>()
 
@@ -122,6 +129,7 @@ export const buildDailySummaries = (entries: ForecastEntry[], offsetSeconds: num
   return summaries
 }
 
+/** Format a temperature value with units and rounding. */
 export const formatTemperature = (value: number, units: Units) => {
   const rounded = Math.round(value)
   return `${rounded}°${units === 'metric' ? 'C' : 'F'}`
