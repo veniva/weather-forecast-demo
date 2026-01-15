@@ -16,6 +16,7 @@ function App() {
     error,
     hasApiKey,
     units,
+    toggleUnits,
     searchByCity,
     useCurrentLocation,
     selectDay,
@@ -25,7 +26,7 @@ function App() {
 
   return (
     <div className="app">
-      <AppHeader units={units} />
+      <AppHeader units={units} onToggleUnits={toggleUnits} />
       {!hasApiKey && (
         <Notice>
           Add <code>VITE_OPENWEATHER_API_KEY</code> to a <code>.env</code> file to enable requests.

@@ -11,6 +11,7 @@ type UseForecastResult = {
   error: string | null
   hasApiKey: boolean
   units: Units
+  toggleUnits: () => void
   searchByCity: (city: string) => void
   useCurrentLocation: () => void
   selectDay: (dayKey: string) => void
@@ -22,10 +23,11 @@ export const useForecast = (): UseForecastResult => {
   const [selectedDayKey, setSelectedDayKey] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [units, setUnits] = useState<Units>(DEFAULT_UNITS)
+  const [lastParams, setLastParams] = useState<Record<string, string> | null>(null)
 
   const apiKey = (import.meta.env.VITE_OPENWEATHER_API_KEY as string | undefined) ?? ''
   const hasApiKey = Boolean(apiKey)
-  const units = DEFAULT_UNITS
 
   const selectedDay = daily.find((day) => day.dayKey === selectedDayKey) ?? null
 
@@ -37,18 +39,19 @@ export const useForecast = (): UseForecastResult => {
     return false
   }
 
-  const fetchForecast = async (params: Record<string, string>) => {
+  const fetchForecast = async (params: Record<string, string>, nextUnits: Units = units) => {
     if (!ensureApiKey()) {
       return
     }
 
     setLoading(true)
     setError(null)
+    setLastParams(params)
 
     try {
       const url = new URL(API_URL)
       url.searchParams.set('appid', apiKey)
-      url.searchParams.set('units', units)
+      url.searchParams.set('units', nextUnits)
       Object.entries(params).forEach(([key, value]) => url.searchParams.set(key, value))
 
       const response = await fetch(url.toString())
@@ -113,6 +116,14 @@ export const useForecast = (): UseForecastResult => {
     )
   }
 
+  const toggleUnits = () => {
+    const nextUnits = units === 'metric' ? 'imperial' : 'metric'
+    setUnits(nextUnits)
+    if (lastParams) {
+      void fetchForecast(lastParams, nextUnits)
+    }
+  }
+
   const selectDay = (dayKey: string) => {
     setSelectedDayKey(dayKey)
   }
@@ -126,6 +137,7 @@ export const useForecast = (): UseForecastResult => {
     error,
     hasApiKey,
     units,
+    toggleUnits,
     searchByCity,
     useCurrentLocation,
     selectDay,
