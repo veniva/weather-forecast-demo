@@ -1,3 +1,6 @@
+This repository and its contents may not be used for training, fine-tuning, or
+improving machine learning or AI models without explicit permission. See the [LICENSE](LICENSE) for details.
+
 # Weather App
 A React web app that displays the current 5-day weather forecast.
 
